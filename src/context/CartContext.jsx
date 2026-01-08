@@ -1,87 +1,84 @@
-// src/context/CartContext.jsx
-import { createContext, useContext, useState } from "react";
+// src/context/CartContext.jsx - 100% WORKING
+import { createContext, useContext, useState, useCallback } from "react";
 
 const CartContext = createContext();
 
 export function CartProvider({ children }) {
-  const [cart, setCart] = useState({
-    items: [],
-    totalQuantity: 0,
-    totalAmount: 0
-  });
+  const [cartItems, setCartItems] = useState([]);
+  
+  const calculateTotals = useCallback((items) => {
+    const totalQuantity = items.reduce((sum, item) => sum + item.quantity, 0);
+    const totalAmount = items.reduce((sum, item) => sum + (item.quantity * item.price), 0);
+    return { totalQuantity, totalAmount };
+  }, []);
 
-  const calculateAndSet = (items) => {
-    const totalQty = items.reduce((sum, item) => sum + item.quantity, 0);
-    const totalAmt = items.reduce((sum, item) => sum + (item.quantity * item.price), 0);
-    
-    setCart({
-      items,
-      totalQuantity: totalQty,
-      totalAmount: totalAmt
-    });
-  };
-
-  const addToCart = (product) => {
-    setCart(prev => {
-      const existing = prev.items.find(item => item.id === product.id);
-      let newItems;
+  const addToCart = useCallback((product) => {
+    setCartItems(prevItems => {
+      const existingItem = prevItems.find(item => item.id === product.id);
       
-      if (existing) {
-        newItems = prev.items.map(item =>
-          item.id === product.id 
+      if (existingItem) {
+        return prevItems.map(item =>
+          item.id === product.id
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
-      } else {
-        newItems = [...prev.items, { ...product, quantity: 1 }];
       }
       
-      calculateAndSet(newItems);
-      return cart; // Return updated cart
+      return [...prevItems, { ...product, quantity: 1 }];
     });
-  };
+  }, []);
 
-  const updateQty = (id, change) => {
-    setCart(prev => {
-      const newItems = prev.items
+  const updateQty = useCallback((id, change) => {
+    setCartItems(prevItems => {
+      const newItems = prevItems
         .map(item => {
           if (item.id === id) {
-            const newQuantity = item.quantity + change;
-            return newQuantity > 0 ? { ...item, quantity: newQuantity } : null;
+            const newQty = item.quantity + change;
+            return newQty > 0 ? { ...item, quantity: newQty } : null;
           }
           return item;
         })
         .filter(Boolean);
-      
-      calculateAndSet(newItems);
-      return cart;
+      return newItems;
     });
-  };
+  }, []);
 
-  const removeItem = (id) => {
-    setCart(prev => {
-      const newItems = prev.items.filter(item => item.id !== id);
-      calculateAndSet(newItems);
-      return cart;
-    });
-  };
+  const removeItem = useCallback((id) => {
+    setCartItems(prevItems => prevItems.filter(item => item.id !== id));
+  }, []);
 
-  const clearCart = () => {
-    setCart({
-      items: [],
-      totalQuantity: 0,
-      totalAmount: 0
-    });
+  const clearCart = useCallback(() => {
+    setCartItems([]);
+  }, []);
+
+  const { totalQuantity, totalAmount } = calculateTotals(cartItems);
+
+  const value = {
+    cart: {
+      items: cartItems,
+      totalQuantity,
+      totalAmount
+    },
+    addToCart,
+    updateQty,
+    removeItem,
+    clearCart
   };
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, updateQty, removeItem, clearCart }}>
+    <CartContext.Provider value={value}>
       {children}
     </CartContext.Provider>
   );
 }
 
-export const useCart = () => useContext(CartContext);
+export const useCart = () => {
+  const context = useContext(CartContext);
+  if (!context) {
+    throw new Error('useCart must be used within CartProvider');
+  }
+  return context;
+};
 
 // import { createContext, useContext, useEffect, useState } from "react";
 // import axios from "axios";
