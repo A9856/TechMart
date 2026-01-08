@@ -1,9 +1,9 @@
-import Navbar from "../components/Navbar";
+// import Navbar from "../components/Navbar";
 
 function Contact() {
   return (
     <>
-      <Navbar cartCount={0} />
+      {/* <Navbar cartCount={0} /> */}
      <div className="container mt-20 mb-30">
       <h2 className="text-center mb-30">Contact Us</h2>
 
