@@ -1,0 +1,129 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "name": "product 1",
+      "price": 100,
+      "image": "/images/product 1.jpg",
+      "description": "This is a high-quality product.",
+      "details": "Made from premium materials, durable and stylish. Perfect for daily use."
+    },
+    {
+      "id": "2",
+      "name": "product 2",
+      "price": 200,
+      "image": "/images/product 2.jpg",
+      "description": "Affordable and reliable.",
+      "details": "Eco-friendly, lightweight, and comes with a warranty."
+    },
+    {
+      "id": "3",
+      "name": "product 3",
+      "price": 100,
+      "image": "/images/product 3.jpg",
+      "description": "This is a high-quality product.",
+      "details": "Made from premium materials, durable and stylish. Perfect for daily use."
+    },
+    {
+      "id": "4",
+      "name": "product 4",
+      "price": 200,
+      "image": "/images/product 4.jpg",
+      "description": "Affordable and reliable.",
+      "details": "Eco-friendly, lightweight, and comes with a warranty."
+    },
+    {
+      "id": "5",
+      "name": "product 5",
+      "price": 100,
+      "image": "/images/product 5.jpg",
+      "description": "This is a high-quality product.",
+      "details": "Made from premium materials, durable and stylish. Perfect for daily use."
+    },
+    {
+      "id": "6",
+      "name": "product 6",
+      "price": 200,
+      "image": "/images/product 6.jpg",
+      "description": "Affordable and reliable.",
+      "details": "Eco-friendly, lightweight, and comes with a warranty."
+    },
+    {
+      "id": "7",
+      "name": "product 7",
+      "price": 100,
+      "image": "/images/product 7.jpg",
+      "description": "This is a high-quality product.",
+      "details": "Made from premium materials, durable and stylish. Perfect for daily use."
+    },
+    {
+      "id": "8",
+      "name": "product 8",
+      "price": 200,
+      "image": "/images/product 8.jpg",
+      "description": "Affordable and reliable.",
+      "details": "Eco-friendly, lightweight, and comes with a warranty."
+    },
+    {
+      "id": "9",
+      "name": "product 9",
+      "price": 100,
+      "image": "/images/product 9.jpg",
+      "description": "This is a high-quality product.",
+      "details": "Made from premium materials, durable and stylish. Perfect for daily use."
+    },
+    {
+      "id": "10",
+      "name": "product 10",
+      "price": 200,
+      "image": "/images/product 10.jpg",
+      "description": "Affordable and reliable.",
+      "details": "Eco-friendly, lightweight, and comes with a warranty."
+    },
+    {
+      "id": "11",
+      "name": "product 11",
+      "price": 100,
+      "image": "/images/product 11.jpg",
+      "description": "This is a high-quality product.",
+      "details": "Made from premium materials, durable and stylish. Perfect for daily use."
+    },
+    {
+      "id": "12",
+      "name": "product 12",
+      "price": 100,
+      "image": "/images/product 12.jpg",
+      "description": "This is a high-quality product.",
+      "details": "Made from premium materials, durable and stylish. Perfect for daily use."
+    }
+  ],
+  "cart": [
+    {
+      "id": "2",
+      "name": "product 2",
+      "price": 200,
+      "image": "/images/product 2.jpg",
+      "description": "Affordable and reliable.",
+      "details": "Eco-friendly, lightweight, and comes with a warranty.",
+      "quantity": 1
+    },
+    {
+      "id": "1",
+      "name": "product 1",
+      "price": 100,
+      "image": "/images/product 1.jpg",
+      "description": "This is a high-quality product.",
+      "details": "Made from premium materials, durable and stylish. Perfect for daily use.",
+      "quantity": 1
+    },
+    {
+      "id": "10",
+      "name": "product 10",
+      "price": 200,
+      "image": "/images/product 10.jpg",
+      "description": "Affordable and reliable.",
+      "details": "Eco-friendly, lightweight, and comes with a warranty.",
+      "quantity": 1
+    }
+  ]
+}
