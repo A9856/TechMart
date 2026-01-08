@@ -1,17 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 
 function Checkout() {
-  const [cart, setCart] = useState({ items: [], totalAmount: 0, totalQuantity: 0 });
+  // ✅ CONTEXT API
+  const { cart, clearCart } = useCart();
+
+  // UI state (same as before)
   const [paymentMethod, setPaymentMethod] = useState("cod");
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const savedCart = localStorage.getItem("cart");
-    if (savedCart) {
-      setCart(JSON.parse(savedCart));
-    }
-  }, []);
 
   const placeOrder = () => {
     if (cart.items.length === 0) {
@@ -22,7 +19,9 @@ function Checkout() {
     alert(`✅ Order placed successfully via ${paymentMethod.toUpperCase()}
 Total Amount: ₹${cart.totalAmount}`);
 
-    localStorage.removeItem("cart");
+    // ✅ clear cart from context + localStorage
+    clearCart();
+
     navigate("/home");
   };
 
@@ -100,7 +99,9 @@ Total Amount: ₹${cart.totalAmount}`);
             Place Order
           </button>
 
-          <Link to="/cart" className="back-link">← Back to Cart</Link>
+          <Link to="/cart" className="back-link">
+            ← Back to Cart
+          </Link>
         </div>
       </div>
     </div>
@@ -108,3 +109,4 @@ Total Amount: ₹${cart.totalAmount}`);
 }
 
 export default Checkout;
+
