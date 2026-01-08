@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import ProductList from "../components/ProductList";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 function Home() {
   const [products, setProducts] = useState([]);
@@ -61,16 +63,18 @@ function Home() {
   return (
     <>
       {/* NAVBAR */}
-      <nav className="navbar">
+      {/* <nav className="navbar">
         <h2 className="logo">TechMart</h2>
 
         <Link to="/cart" className="cart-link">
           🛒 Cart <span>{cart.totalQuantity}</span>
         </Link>
-      </nav>
+      </nav> */}
 
+      <Navbar cartCount={cart.totalQuantity}/>
       {/* PRODUCTS */}
       <ProductList products={products} addToCart={addToCart} />
+      <Footer/>
     </>
   );
 }
