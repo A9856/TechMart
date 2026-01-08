@@ -1,5 +1,5 @@
-// src/context/CartContext.jsx - Simplified (no json-server)
-import { createContext, useContext, useEffect, useState } from "react";
+// src/context/CartContext.jsx
+import { createContext, useContext, useState } from "react";
 
 const CartContext = createContext();
 
@@ -11,58 +11,67 @@ export function CartProvider({ children }) {
   });
 
   const calculateAndSet = (items) => {
+    const totalQty = items.reduce((sum, item) => sum + item.quantity, 0);
+    const totalAmt = items.reduce((sum, item) => sum + (item.quantity * item.price), 0);
+    
     setCart({
       items,
-      totalQuantity: items.reduce((s, i) => s + i.quantity, 0),
-      totalAmount: items.reduce((s, i) => s + i.quantity * i.price, 0)
+      totalQuantity: totalQty,
+      totalAmount: totalAmt
     });
   };
 
   const addToCart = (product) => {
     setCart(prev => {
       const existing = prev.items.find(item => item.id === product.id);
-      let updatedItems;
+      let newItems;
       
       if (existing) {
-        updatedItems = prev.items.map(item =>
-          item.id === product.id
+        newItems = prev.items.map(item =>
+          item.id === product.id 
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
       } else {
-        updatedItems = [...prev.items, { ...product, quantity: 1 }];
+        newItems = [...prev.items, { ...product, quantity: 1 }];
       }
       
-      calculateAndSet(updatedItems);
-      return { ...prev };
+      calculateAndSet(newItems);
+      return cart; // Return updated cart
     });
   };
 
   const updateQty = (id, change) => {
     setCart(prev => {
-      const updatedItems = prev.items.map(item => {
-        if (item.id === id) {
-          const newQty = item.quantity + change;
-          return newQty > 0 ? { ...item, quantity: newQty } : null;
-        }
-        return item;
-      }).filter(Boolean);
+      const newItems = prev.items
+        .map(item => {
+          if (item.id === id) {
+            const newQuantity = item.quantity + change;
+            return newQuantity > 0 ? { ...item, quantity: newQuantity } : null;
+          }
+          return item;
+        })
+        .filter(Boolean);
       
-      calculateAndSet(updatedItems);
-      return { ...prev };
+      calculateAndSet(newItems);
+      return cart;
     });
   };
 
   const removeItem = (id) => {
     setCart(prev => {
-      const updatedItems = prev.items.filter(item => item.id !== id);
-      calculateAndSet(updatedItems);
-      return { ...prev };
+      const newItems = prev.items.filter(item => item.id !== id);
+      calculateAndSet(newItems);
+      return cart;
     });
   };
 
   const clearCart = () => {
-    calculateAndSet([]);
+    setCart({
+      items: [],
+      totalQuantity: 0,
+      totalAmount: 0
+    });
   };
 
   return (
@@ -73,7 +82,6 @@ export function CartProvider({ children }) {
 }
 
 export const useCart = () => useContext(CartContext);
-
 
 // import { createContext, useContext, useEffect, useState } from "react";
 // import axios from "axios";
